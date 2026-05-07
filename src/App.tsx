@@ -4,11 +4,27 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import HomeView from './views/HomeView'
 import ProjectDetailView from './views/ProjectDetailView'
+import { GA_ID } from './main'
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+  }
+}
+
+function trackPageview(path: string) {
+  if (window.gtag && GA_ID && !GA_ID.includes('XXXXXXXXXX')) {
+    window.gtag('config', GA_ID, { page_path: path })
+  }
+}
 
 function ScrollHandler() {
   const location = useLocation()
 
   useEffect(() => {
+    // Sledování stránky při každém přechodu (SPA route change)
+    trackPageview(location.pathname + location.search)
+
     if (location.hash) {
       const id = setTimeout(() => {
         const el = document.querySelector(location.hash)

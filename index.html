@@ -29,6 +29,18 @@
     <!-- Theme color (mobile browser bar) -->
     <meta name="theme-color" content="#0B0F19" />
 
+    <!-- Google Analytics — gtag.js (injektováno staticky, jinak Tag Assistant nedetekuje) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      var gaId = '%VITE_GA_ID%';
+      if (gaId && gaId.indexOf('XXXXXXXXXX') === -1) {
+        gtag('config', gaId, { send_page_view: false });
+      }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
