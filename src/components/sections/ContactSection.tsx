@@ -7,7 +7,7 @@ import Toast from '../ui/Toast'
 import MdiIcon from '../ui/MdiIcon'
 
 const contactInfo = [
-  { icon: 'mdi-email-outline', label: 'E-mail', value: 'hello@tomasjanicek.cz' },
+  { icon: 'mdi-email-outline', label: 'E-mail', value: 'info@tomasjanicek.eu' },
   { icon: 'mdi-map-marker-outline', label: 'Lokace', value: 'Česká republika' },
   { icon: 'mdi-clock-outline', label: 'Odezva', value: 'Do 24 hodin' },
 ]
