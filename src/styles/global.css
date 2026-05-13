@@ -1455,8 +1455,10 @@ body {
   .about-hero__card { display: none; }
   .about-bio-grid { grid-template-columns: 1fr; }
 
-  .about-timeline__item { grid-template-columns: 0 44px 1fr; }
+  .about-timeline { padding-left: 4px; }
+  .about-timeline__item { grid-template-columns: 44px 1fr; gap: 0 12px; }
   .about-timeline__left { display: none; }
+  .about-timeline__right { padding-bottom: 16px; overflow: visible; }
 
   .about-biz-row { flex-direction: column; align-items: flex-start; gap: 10px; }
   .about-biz-row__value { text-align: left; }
