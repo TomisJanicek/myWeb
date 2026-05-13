@@ -153,7 +153,7 @@ const cs = {
     heroLabel: '// o mně',
     heroTitle: 'Ahoj, jsem',
     heroName: 'Tomáš Janíček',
-    heroSubtitle: 'IT freelancer z ČR. Věnuji se vývoji mobilních appek, webu a UX/UI designu — primárně jako vedlejší činnost vedle hlavního zaměstnání, s titulkem v oboru za zády.',
+    heroSubtitle: 'IT freelancer z ČR. Věnuji se vývoji mobilních appek, webu a UX/UI designu — primárně jako vedlejší činnost vedle hlavního zaměstnání, s titulem v oboru za zády.',
     ctaContact: 'Napsat mi',
     ctaProjects: 'Moje projekty',
     statYears: 'let zkušeností',
