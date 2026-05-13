@@ -8,6 +8,10 @@ const navLinks = [
   { title: 'Kontakt', href: '#contact' },
 ]
 
+const pageLinks = [
+  { title: 'O mně', path: '/o-mne' },
+]
+
 export default function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -40,13 +44,18 @@ export default function Footer() {
                 {link.title}
               </button>
             ))}
+            {pageLinks.map(link => (
+              <button key={link.path} className="btn btn--text footer-nav-link" onClick={() => navigate(link.path)}>
+                {link.title}
+              </button>
+            ))}
           </nav>
 
           <div className="footer-grid__social">
-            <a href="https://linkedin.com/in/tomasjanicek" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/tomas-janicek/" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">
               <MdiIcon icon="mdi-linkedin" size={20} />
             </a>
-            <a href="https://github.com/tomasjanicek" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="GitHub">
+            <a href="https://github.com/TomisJanicek" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="GitHub">
               <MdiIcon icon="mdi-github" size={20} />
             </a>
             <button className="footer-social-btn" aria-label="Kontakt" onClick={() => scrollTo('#contact')}>

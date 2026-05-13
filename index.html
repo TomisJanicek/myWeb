@@ -5,31 +5,48 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO -->
+    <!-- ── Primární SEO ──────────────────────────── -->
     <title>Tomáš Janíček — IT Freelancer | Design, Android, iOS, Web</title>
-    <meta name="description" content="IT Freelancer specializující se na UX/UI design, Android a iOS vývoj a moderní webové aplikace. Dostupný pro nové projekty." />
+    <meta name="description" content="Tomáš Janíček — IT freelancer z ČR. Tvorba webových a mobilních aplikací (Android, iOS), UX/UI design na zakázku. IČO 09659153. Napište na info@tomasjanicek.eu." />
     <meta name="author" content="Tomáš Janíček" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://tomasjanicek.cz/" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="keywords" content="IT freelancer, webové aplikace, mobilní aplikace, Android vývoj, iOS vývoj, UX UI design, React developer, Kotlin, Swift, Figma, Česká republika, Tomáš Janíček" />
+    <link rel="canonical" href="https://tomasjanicek.eu/" />
 
-    <!-- Open Graph -->
+    <!-- ── Geo & jazyk ──────────────────────────── -->
+    <meta name="geo.region" content="CZ" />
+    <meta name="geo.placename" content="Česká republika" />
+    <meta name="language" content="cs" />
+    <link rel="alternate" hreflang="cs" href="https://tomasjanicek.eu/" />
+
+    <!-- ── Open Graph ───────────────────────────── -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tomasjanicek.cz/" />
-    <meta property="og:title" content="Tomáš Janíček — IT Freelancer" />
-    <meta property="og:description" content="Design, Android, iOS, Web Apps — vše od A do Z." />
-    <meta property="og:image" content="https://tomasjanicek.cz/og-image.png" />
+    <meta property="og:site_name" content="Tomáš Janíček" />
+    <meta property="og:url" content="https://tomasjanicek.eu/" />
+    <meta property="og:title" content="Tomáš Janíček — IT Freelancer | Design, Android, iOS, Web" />
+    <meta property="og:description" content="IT freelancer specializující se na Android, iOS, web a UX/UI design. Dostupný pro nové projekty." />
+    <meta property="og:image" content="https://tomasjanicek.eu/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tomáš Janíček — IT Freelancer" />
     <meta property="og:locale" content="cs_CZ" />
 
-    <!-- Twitter Card -->
+    <!-- ── Twitter / X Card ─────────────────────── -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@tomasjanicek" />
+    <meta name="twitter:creator" content="@tomasjanicek" />
     <meta name="twitter:title" content="Tomáš Janíček — IT Freelancer" />
-    <meta name="twitter:description" content="Design, Android, iOS, Web Apps — vše od A do Z." />
-    <meta name="twitter:image" content="https://tomasjanicek.cz/og-image.png" />
+    <meta name="twitter:description" content="Android, iOS, Web & Design — vše od A do Z." />
+    <meta name="twitter:image" content="https://tomasjanicek.eu/og-image.png" />
 
-    <!-- Theme color (mobile browser bar) -->
+    <!-- ── Apple / mobile ───────────────────────── -->
     <meta name="theme-color" content="#0B0F19" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Tomáš Janíček" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Google Analytics — gtag.js (injektováno staticky, jinak Tag Assistant nedetekuje) -->
+    <!-- ── Google Analytics ─────────────────────── -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_ID%"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -41,7 +58,61 @@
       }
     </script>
 
-    <!-- Fonts -->
+    <!-- ── Structured Data (JSON-LD) ────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://tomasjanicek.eu/#person",
+      "name": "Tomáš Janíček",
+      "givenName": "Tomáš",
+      "familyName": "Janíček",
+      "url": "https://tomasjanicek.eu/",
+      "email": "info@tomasjanicek.eu",
+      "jobTitle": "IT Freelancer",
+      "description": "IT freelancer specializující se na UX/UI design, Android a iOS vývoj a moderní webové aplikace. Podniká jako OSVČ, IČO 09659153.",
+      "taxID": "09659153",
+      "nationality": {
+        "@type": "Country",
+        "name": "Czech Republic"
+      },
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Mendelova univerzita v Brně",
+          "url": "https://www.mendelu.cz/"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Střední průmyslová škola Třebíč"
+        }
+      ],
+      "knowsAbout": [
+        "UX/UI Design",
+        "Android Development",
+        "iOS Development",
+        "Web Development",
+        "React",
+        "Kotlin",
+        "Swift",
+        "Figma"
+      ],
+      "sameAs": [
+        "https://tomasjanicek.eu/",
+        "https://tomasjanicek.eu/o-mne",
+        "https://www.linkedin.com/in/tomas-janicek/",
+        "https://github.com/TomisJanicek"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@tomasjanicek.eu",
+        "contactType": "customer support",
+        "availableLanguage": ["cs", "en"]
+      }
+    }
+    </script>
+
+    <!-- ── Fonts ─────────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

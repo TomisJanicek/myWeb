@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import HomeView from './views/HomeView'
 import ProjectDetailView from './views/ProjectDetailView'
+import AboutView from './views/AboutView'
 import { GA_ID } from './main'
 
 declare global {
@@ -50,6 +51,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomeView />} />
+          <Route path="/o-mne" element={<AboutView />} />
           <Route path="/project/:slug" element={<ProjectDetailView />} />
           <Route path="*" element={<HomeView />} />
         </Routes>

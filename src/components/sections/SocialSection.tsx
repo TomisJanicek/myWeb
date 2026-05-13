@@ -2,8 +2,8 @@ import { useScrollReveal } from '../../hooks/useScrollReveal'
 import MdiIcon from '../ui/MdiIcon'
 
 const socialLinks = [
-  { icon: 'mdi-linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/tomasjanicek', color: '#0A66C2', handle: '@tomasjanicek' },
-  { icon: 'mdi-github', label: 'GitHub', url: 'https://github.com/tomasjanicek', color: '#E0E0E0', handle: '@tomasjanicek' },
+  { icon: 'mdi-linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/tomas-janicek/', color: '#0A66C2', handle: '@tomas-janicek' },
+  { icon: 'mdi-github', label: 'GitHub', url: 'https://github.com/TomisJanicek', color: '#E0E0E0', handle: '@TomisJanicek' },
   { icon: 'mdi-twitter', label: 'X / Twitter', url: 'https://x.com/tomasjanicek', color: '#1DA1F2', handle: '@tomasjanicek' },
   { icon: 'mdi-instagram', label: 'Instagram', url: 'https://instagram.com/tomasjanicek', color: '#E4405F', handle: '@tomasjanicek' },
 ]
