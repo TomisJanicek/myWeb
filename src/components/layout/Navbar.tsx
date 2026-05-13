@@ -1,23 +1,25 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import MdiIcon from '../ui/MdiIcon'
-
-const navLinks = [
-  { title: 'Služby', href: '#services' },
-  { title: 'Projekty', href: '#projects' },
-  { title: 'Sociální sítě', href: '#social' },
-  { title: 'Kontakt', href: '#contact' },
-]
-
-const pageLinks = [
-  { title: 'O mně', path: '/o-mne' },
-]
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const { t, i18n } = useTranslation()
+
+  const navLinks = [
+    { title: t('nav.services'), href: '#services' },
+    { title: t('nav.projects'), href: '#projects' },
+    { title: t('nav.social'), href: '#social' },
+    { title: t('nav.contact'), href: '#contact' },
+  ]
+
+  const pageLinks = [
+    { title: t('nav.about'), path: '/o-mne' },
+  ]
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40)
@@ -25,7 +27,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [location])
@@ -41,6 +42,13 @@ export default function Navbar() {
       const top = el.getBoundingClientRect().top + window.scrollY - 64
       window.scrollTo({ top, behavior: 'smooth' })
     }
+  }
+
+  const toggleLang = () => {
+    const next = i18n.language === 'cs' ? 'en' : 'cs'
+    i18n.changeLanguage(next)
+    localStorage.setItem('lang', next)
+    document.documentElement.lang = next
   }
 
   return (
@@ -62,8 +70,13 @@ export default function Navbar() {
               {link.title}
             </button>
           ))}
+          <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
+            <span className={i18n.language === 'cs' ? 'lang-toggle__opt lang-toggle__opt--active' : 'lang-toggle__opt'}>CS</span>
+            <span className="lang-toggle__sep">|</span>
+            <span className={i18n.language === 'en' ? 'lang-toggle__opt lang-toggle__opt--active' : 'lang-toggle__opt'}>EN</span>
+          </button>
           <button className="btn btn--outlined btn--small ml-3" onClick={() => scrollTo('#contact')}>
-            Kontaktovat
+            {t('nav.contactBtn')}
           </button>
         </nav>
 
@@ -90,8 +103,15 @@ export default function Navbar() {
             {link.title}
           </button>
         ))}
+        <div className="navbar__mobile-lang">
+          <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
+            <span className={i18n.language === 'cs' ? 'lang-toggle__opt lang-toggle__opt--active' : 'lang-toggle__opt'}>CS</span>
+            <span className="lang-toggle__sep">|</span>
+            <span className={i18n.language === 'en' ? 'lang-toggle__opt lang-toggle__opt--active' : 'lang-toggle__opt'}>EN</span>
+          </button>
+        </div>
         <button className="btn btn--outlined btn--small navbar__mobile-cta" onClick={() => scrollTo('#contact')}>
-          Kontaktovat
+          {t('nav.contactBtn')}
         </button>
       </div>
     </header>

@@ -1,20 +1,22 @@
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import MdiIcon from '../ui/MdiIcon'
 
-const navLinks = [
-  { title: 'Služby', href: '#services' },
-  { title: 'Projekty', href: '#projects' },
-  { title: 'Sociální sítě', href: '#social' },
-  { title: 'Kontakt', href: '#contact' },
-]
-
 const pageLinks = [
-  { title: 'O mně', path: '/o-mne' },
+  { title: 'about', path: '/o-mne' },
 ]
 
 export default function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { t } = useTranslation()
+
+  const navLinks = [
+    { title: t('nav.services'), href: '#services' },
+    { title: t('nav.projects'), href: '#projects' },
+    { title: t('nav.social'), href: '#social' },
+    { title: t('nav.contact'), href: '#contact' },
+  ]
 
   const scrollTo = (hash: string) => {
     if (location.pathname !== '/') {
@@ -35,7 +37,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-grid__brand">
             <span className="font-mono footer-logo">{'<TJ />'}</span>
-            <p className="footer-tagline">Design &amp; Development</p>
+            <p className="footer-tagline">{t('footer.tagline')}</p>
           </div>
 
           <nav className="footer-grid__nav" aria-label="Patička navigace">
@@ -46,7 +48,7 @@ export default function Footer() {
             ))}
             {pageLinks.map(link => (
               <button key={link.path} className="btn btn--text footer-nav-link" onClick={() => navigate(link.path)}>
-                {link.title}
+                {t(`nav.${link.title}`)}
               </button>
             ))}
           </nav>
@@ -66,7 +68,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copy">
-            &copy; {new Date().getFullYear()} Tomáš Janíček. Všechna práva vyhrazena.
+            &copy; {new Date().getFullYear()} Tomáš Janíček. {t('footer.copy')}
           </p>
           <p className="footer-version">v{__APP_VERSION__}</p>
         </div>

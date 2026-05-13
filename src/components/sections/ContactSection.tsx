@@ -1,18 +1,11 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import GlassCard from '../ui/GlassCard'
 import IconWrap from '../ui/IconWrap'
 import FormField from '../ui/FormField'
 import Toast from '../ui/Toast'
 import MdiIcon from '../ui/MdiIcon'
-
-const contactInfo = [
-  { icon: 'mdi-email-outline', label: 'E-mail', value: 'info@tomasjanicek.eu' },
-  { icon: 'mdi-map-marker-outline', label: 'Lokace', value: 'Česká republika' },
-  { icon: 'mdi-clock-outline', label: 'Odezva', value: 'Do 24 hodin' },
-]
-
-const projectTypes = ['Webová aplikace', 'Mobilní aplikace', 'UX/UI Design', 'Konzultace', 'Jiné']
 
 interface FormData {
   name: string
@@ -28,30 +21,38 @@ interface FormErrors {
   message?: string
 }
 
-function validate(data: FormData): FormErrors {
-  const errors: FormErrors = {}
-  if (!data.name.trim()) errors.name = 'Toto pole je povinné'
-  if (!data.email.trim()) errors.email = 'Toto pole je povinné'
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = 'Zadejte platný e-mail'
-  if (!data.projectType) errors.projectType = 'Toto pole je povinné'
-  if (!data.message.trim()) errors.message = 'Toto pole je povinné'
-  return errors
-}
-
 export default function ContactSection() {
   const { revealRef } = useScrollReveal()
+  const { t } = useTranslation()
+
+  const projectTypes = t('contact.types', { returnObjects: true }) as string[]
+
+  const contactInfo = [
+    { icon: 'mdi-email-outline', label: t('contact.infoEmail'), value: 'info@tomasjanicek.eu' },
+    { icon: 'mdi-map-marker-outline', label: t('contact.infoLocation'), value: t('contact.infoLocationVal') },
+    { icon: 'mdi-clock-outline', label: t('contact.infoResponse'), value: t('contact.infoResponseVal') },
+  ]
+
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', projectType: '', message: '' })
   const [errors, setErrors] = useState<FormErrors>({})
   const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
+  const validate = (data: FormData): FormErrors => {
+    const errs: FormErrors = {}
+    if (!data.name.trim()) errs.name = t('contact.errRequired')
+    if (!data.email.trim()) errs.email = t('contact.errRequired')
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errs.email = t('contact.errEmail')
+    if (!data.projectType) errs.projectType = t('contact.errRequired')
+    if (!data.message.trim()) errs.message = t('contact.errRequired')
+    return errs
+  }
+
   const handleChange = (field: keyof FormData, value: string) => {
     const updated = { ...formData, [field]: value }
     setFormData(updated)
-    if (touched[field]) {
-      setErrors(validate(updated))
-    }
+    if (touched[field]) setErrors(validate(updated))
   }
 
   const handleBlur = (field: keyof FormData) => {
@@ -74,16 +75,10 @@ export default function ContactSection() {
         const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            projectType: formData.projectType,
-            message: formData.message,
-          }),
+          body: JSON.stringify(formData),
         })
         if (!res.ok) throw new Error('send_failed')
       } else {
-        // Dev fallback — simulace
         await new Promise(resolve => setTimeout(resolve, 1200))
       }
       setShowSuccess(true)
@@ -91,7 +86,7 @@ export default function ContactSection() {
       setTouched({})
       setErrors({})
     } catch {
-      setErrors(prev => ({ ...prev, message: 'Odeslání selhalo. Zkuste to prosím znovu.' }))
+      setErrors(prev => ({ ...prev, message: t('contact.errSend') }))
     } finally {
       setIsSubmitting(false)
     }
@@ -103,16 +98,16 @@ export default function ContactSection() {
 
       <Toast
         visible={showSuccess}
-        message="Zpráva byla úspěšně odeslána! Ozvu se co nejdříve."
+        message={t('contact.successMsg')}
         icon="mdi-check-circle"
         onClose={() => setShowSuccess(false)}
       />
 
       <div className="site-container" style={{ position: 'relative', zIndex: 1 }}>
         <div ref={revealRef} className="section-header reveal">
-          <p className="section-label">// pojďme spolupracovat</p>
-          <h2 className="section-title">Napište mi</h2>
-          <p className="section-subtitle">Máte nápad na projekt? Ať už jde o web, appku nebo design — rád vám pomůžu.</p>
+          <p className="section-label">{t('contact.label')}</p>
+          <h2 className="section-title">{t('contact.title')}</h2>
+          <p className="section-subtitle">{t('contact.subtitle')}</p>
         </div>
 
         <div className="contact-layout">
@@ -138,9 +133,9 @@ export default function ContactSection() {
                   </div>
                   <div className="contact-terminal__body">
                     <p>&gt; status</p>
-                    <p style={{ color: 'var(--color-primary)' }}>Dostupný pro spolupráci</p>
+                    <p style={{ color: 'var(--color-primary)' }}>{t('contact.terminalStatus')}</p>
                     <p>&gt; stack</p>
-                    <p style={{ color: 'rgba(179,136,255,0.8)' }}>React, Kotlin, Swift, Figma</p>
+                    <p style={{ color: 'rgba(179,136,255,0.8)' }}>{t('contact.terminalStack')}</p>
                     <p className="contact-terminal__cursor">&gt;</p>
                   </div>
                 </div>
@@ -155,7 +150,7 @@ export default function ContactSection() {
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="form-name-email">
                     <FormField
-                      label="Jméno"
+                      label={t('contact.labelName')}
                       icon="mdi-account-outline"
                       value={formData.name}
                       onChange={e => handleChange('name', e.target.value)}
@@ -164,7 +159,7 @@ export default function ContactSection() {
                       autoComplete="name"
                     />
                     <FormField
-                      label="E-mail"
+                      label={t('contact.labelEmail')}
                       icon="mdi-email-outline"
                       type="email"
                       value={formData.email}
@@ -178,29 +173,29 @@ export default function ContactSection() {
                   <div className="form-row">
                     <FormField
                       as="select"
-                      label="Typ projektu"
+                      label={t('contact.labelType')}
                       icon="mdi-folder-outline"
                       value={formData.projectType}
                       onChange={e => handleChange('projectType', e.target.value)}
                       onBlur={() => handleBlur('projectType')}
                       error={touched.projectType ? errors.projectType : undefined}
                     >
-                      <option value="" disabled>Vyberte typ projektu</option>
-                      {projectTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                      <option value="" disabled>{t('contact.placeholderType')}</option>
+                      {projectTypes.map(type => <option key={type} value={type}>{type}</option>)}
                     </FormField>
                   </div>
 
                   <div className="form-row">
                     <FormField
                       as="textarea"
-                      label="Popis projektu"
+                      label={t('contact.labelMessage')}
                       icon="mdi-message-outline"
                       rows={5}
                       value={formData.message}
                       onChange={e => handleChange('message', e.target.value)}
                       onBlur={() => handleBlur('message')}
                       error={touched.message ? errors.message : undefined}
-                      placeholder="Popište váš projekt..."
+                      placeholder={t('contact.placeholderMessage')}
                     />
                   </div>
 
@@ -210,8 +205,8 @@ export default function ContactSection() {
                     disabled={isSubmitting}
                   >
                     {isSubmitting
-                      ? <><span className="btn__spinner" /> Odesílám…</>
-                      : <><MdiIcon icon="mdi-send" size={18} /> Odeslat poptávku</>
+                      ? <><span className="btn__spinner" /> {t('contact.submitting')}</>
+                      : <><MdiIcon icon="mdi-send" size={18} /> {t('contact.submit')}</>
                     }
                   </button>
                 </form>

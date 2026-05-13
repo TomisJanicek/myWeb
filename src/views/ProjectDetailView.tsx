@@ -1,12 +1,22 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { getProjectBySlug, projects, categoryLabel } from '../data/projects'
+import { useTranslation } from 'react-i18next'
+import { getProjectBySlug, projects } from '../data/projects'
 import GlassCard from '../components/ui/GlassCard'
 import TechTag from '../components/ui/TechTag'
 import MdiIcon from '../components/ui/MdiIcon'
 
+const categoryLabel: Record<string, string> = {
+  design: 'Design',
+  android: 'Android',
+  ios: 'iOS',
+  web: 'Web',
+}
+
 export default function ProjectDetailView() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
+
   const project = getProjectBySlug(slug ?? '')
 
   const otherProjects = project
@@ -21,16 +31,24 @@ export default function ProjectDetailView() {
       <div className="project-not-found" style={{ textAlign: 'center', padding: '200px 0 120px' }}>
         <div className="site-container">
           <MdiIcon icon="mdi-alert-circle-outline" size={80} color="var(--color-primary)" style={{ marginBottom: 24 }} />
-          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: 700, marginBottom: 16 }}>Projekt nenalezen</h1>
-          <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 32 }}>Tento projekt neexistuje nebo byl odstraněn.</p>
+          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: 700, marginBottom: 16 }}>
+            {t('projects.notFound.title')}
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 32 }}>{t('projects.notFound.desc')}</p>
           <button className="btn btn--outlined btn--medium" onClick={goBack}>
             <MdiIcon icon="mdi-arrow-left" size={18} />
-            Zpět na portfolio
+            {t('projects.notFound.back')}
           </button>
         </div>
       </div>
     )
   }
+
+  const desc = t(`projects.items.${project.slug}.description`, { defaultValue: project.title })
+  const longDesc = t(`projects.items.${project.slug}.longDescription`, { defaultValue: '' })
+  const role = t(`projects.items.${project.slug}.role`, { defaultValue: project.title })
+  const client = t(`projects.items.${project.slug}.client`, { defaultValue: '' })
+  const features = t(`projects.items.${project.slug}.features`, { returnObjects: true, defaultValue: [] }) as string[]
 
   return (
     <div className="project-detail">
@@ -39,7 +57,7 @@ export default function ProjectDetailView() {
         <div className="site-container" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
           <button className="btn btn--text btn--small" style={{ color: 'rgba(255,255,255,0.5)' }} onClick={goBack}>
             <MdiIcon icon="mdi-arrow-left" size={18} />
-            Zpět na portfolio
+            {t('projects.detail.back')}
           </button>
         </div>
       </div>
@@ -59,7 +77,7 @@ export default function ProjectDetailView() {
             </div>
 
             <h1 className="project-detail__title">{project.title}</h1>
-            <p className="project-detail__subtitle">{project.description}</p>
+            <p className="project-detail__subtitle">{desc}</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
               {project.tags.map(tag => <TechTag key={tag} label={tag} />)}
@@ -76,9 +94,11 @@ export default function ProjectDetailView() {
             <div className="detail-grid__main">
               <GlassCard style={{ borderRadius: 16 }}>
                 <div className="detail-card__inner">
-                  <h2 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 20 }}>O projektu</h2>
+                  <h2 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 20 }}>
+                    {t('projects.detail.about')}
+                  </h2>
                   <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.85, fontSize: '0.95rem' }}>
-                    {project.longDescription}
+                    {longDesc}
                   </p>
                 </div>
               </GlassCard>
@@ -88,12 +108,12 @@ export default function ProjectDetailView() {
             <div className="detail-grid__sidebar">
               <GlassCard style={{ borderRadius: 16 }}>
                 <div className="detail-card__inner">
-                  <h3 className="detail-sidebar-heading">Info</h3>
+                  <h3 className="detail-sidebar-heading">{t('projects.detail.info')}</h3>
                   {[
-                    { label: 'Role', value: project.role },
-                    { label: 'Klient', value: project.client },
-                    { label: 'Rok', value: project.year },
-                    { label: 'Kategorie', value: categoryLabel[project.category] },
+                    { label: t('projects.detail.labelRole'), value: role },
+                    { label: t('projects.detail.labelClient'), value: client },
+                    { label: t('projects.detail.labelYear'), value: project.year },
+                    { label: t('projects.detail.labelCategory'), value: categoryLabel[project.category] },
                   ].map((row, i, arr) => (
                     <div key={row.label} className="detail-info-row" style={i === arr.length - 1 ? { borderBottom: 'none', paddingBottom: 0 } : {}}>
                       <span className="detail-info-label font-mono">{row.label}</span>
@@ -105,9 +125,9 @@ export default function ProjectDetailView() {
 
               <GlassCard style={{ borderRadius: 16 }}>
                 <div className="detail-card__inner">
-                  <h3 className="detail-sidebar-heading">Klíčové funkce</h3>
+                  <h3 className="detail-sidebar-heading">{t('projects.detail.features')}</h3>
                   <ul className="detail-features">
-                    {project.features.map(feature => (
+                    {features.map(feature => (
                       <li key={feature} className="detail-feature-item">
                         <MdiIcon icon="mdi-check-circle" size={16} color="var(--color-primary)" style={{ marginRight: 12, flexShrink: 0 }} />
                         <span>{feature}</span>
@@ -123,7 +143,7 @@ export default function ProjectDetailView() {
           {otherProjects.length > 0 && (
             <div className="related-section">
               <h2 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 32, textAlign: 'center' }}>
-                Další projekty v kategorii {categoryLabel[project.category]}
+                {t('projects.detail.related')} {categoryLabel[project.category]}
               </h2>
               <div className="card-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', maxWidth: 700, margin: '0 auto' }}>
                 {otherProjects.map(rp => (
@@ -141,7 +161,9 @@ export default function ProjectDetailView() {
                     </div>
                     <div className="related-card__content">
                       <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 8 }}>{rp.title}</h3>
-                      <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7 }}>{rp.description}</p>
+                      <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7 }}>
+                        {t(`projects.items.${rp.slug}.description`, { defaultValue: rp.title })}
+                      </p>
                     </div>
                   </GlassCard>
                 ))}
@@ -152,11 +174,11 @@ export default function ProjectDetailView() {
           {/* CTA */}
           <div className="detail-cta" style={{ textAlign: 'center' }}>
             <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 24 }}>
-              Zaujal vás tento projekt? Pojďme si promluvit o tom vašem.
+              {t('projects.detail.cta')}
             </p>
             <button className="btn btn--filled btn--large btn-glow" onClick={goToContact}>
               <MdiIcon icon="mdi-email-outline" size={20} />
-              Napsat mi
+              {t('projects.detail.ctaBtn')}
             </button>
           </div>
         </div>

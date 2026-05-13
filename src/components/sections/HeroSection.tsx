@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useTypewriter } from '../../hooks/useTypewriter'
 import MdiIcon from '../ui/MdiIcon'
 
@@ -14,7 +15,8 @@ const codeLines = [
 export default function HeroSection() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { typedText, cursorVisible } = useTypewriter('Tvořím digitální produkty od A do Z.')
+  const { t } = useTranslation()
+  const { typedText, cursorVisible } = useTypewriter(t('hero.typewriter'))
 
   const scrollTo = (hash: string) => {
     if (location.pathname !== '/') {
@@ -48,7 +50,7 @@ export default function HeroSection() {
         {/* Badge */}
         <div className="hero-badge">
           <span className="hero-badge__dot" />
-          <span className="font-mono" style={{ fontSize: '0.78rem' }}>Dostupný pro nové projekty</span>
+          <span className="font-mono" style={{ fontSize: '0.78rem' }}>{t('hero.badge')}</span>
         </div>
 
         {/* Title */}
@@ -77,11 +79,11 @@ export default function HeroSection() {
         <div className="hero-cta">
           <button className="btn btn--outlined btn--large hero-btn" onClick={() => scrollTo('#projects')}>
             <MdiIcon icon="mdi-briefcase-outline" size={20} />
-            Moje projekty
+            {t('hero.ctaProjects')}
           </button>
           <button className="btn btn--filled btn--large btn-glow" onClick={() => scrollTo('#contact')}>
             <MdiIcon icon="mdi-email-outline" size={20} />
-            Napsat mi
+            {t('hero.ctaContact')}
           </button>
         </div>
 

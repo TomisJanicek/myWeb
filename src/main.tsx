@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './styles/global.css'
 import '@mdi/font/css/materialdesignicons.min.css'
+import './i18n'
 
 // GA se inicializuje staticky v index.html přes %VITE_GA_ID%
 // Zde jen zpřístupníme ID pro route tracking v App.tsx

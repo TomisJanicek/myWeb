@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import MdiIcon from '../ui/MdiIcon'
 
@@ -10,6 +11,7 @@ const socialLinks = [
 
 export default function SocialSection() {
   const { revealRef } = useScrollReveal()
+  const { t } = useTranslation()
 
   return (
     <section id="social" className="section-padding section-divider" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -17,9 +19,9 @@ export default function SocialSection() {
 
       <div className="site-container" style={{ position: 'relative', zIndex: 1 }}>
         <div ref={revealRef} className="section-header reveal">
-          <p className="section-label">// kde mě najdeš</p>
-          <h2 className="section-title">Sociální sítě</h2>
-          <p className="section-subtitle">Sledujte moji práci, open-source projekty a tech postřehy.</p>
+          <p className="section-label">{t('social.label')}</p>
+          <h2 className="section-title">{t('social.title')}</h2>
+          <p className="section-subtitle">{t('social.subtitle')}</p>
         </div>
 
         <div className="card-grid card-grid--4">
